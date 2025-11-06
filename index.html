@@ -27,6 +27,10 @@
             border-radius: 5px;
             display: inline-block;
             margin: 10px;
+            transition: 0.2s;
+        }
+        .btn:hover {
+            opacity: 0.85;
         }
         .instagram-btn {
             background: #E1306C;
@@ -44,36 +48,57 @@
         <p>Para continuar, siga os passos abaixo:</p>
         
         <div class="countdown" id="countdown">
-            Redirecionando para o Instagram em: <span id="timer">10</span> segundos
+            Redirecionando para o Instagram em <span id="timer">10</span> segundos...
         </div>
         
-        <a href="https://www.instagram.com/maisinternetprovedor/" target="_blank" class="btn instagram-btn">
+        <a href="#" id="instaLink" class="btn instagram-btn">
             📱 Visitar Instagram Agora
         </a>
         
         <p>⬇️ <strong>Depois de visitar nosso Instagram:</strong></p>
         
         <a href="[AUTH_URL]" class="btn">
-            ✅ Conectar à Rede WiFi
+            ✅ Conectar à Rede Wi-Fi
         </a>
         
         <p style="margin-top: 20px; font-size: 12px; color: #888;">
-            Após clicar em "Conectar à Rede WiFi", você terá acesso completo à internet.
+            Após clicar em "Conectar à Rede Wi-Fi", você terá acesso completo à internet.
         </p>
     </div>
 
     <script>
+        const instagramURL = "https://www.instagram.com/maisinternetprovedor/";
+
+        // Função para abrir link no navegador externo (intent -> Android)
+        function openExternalLink() {
+            const userAgent = navigator.userAgent.toLowerCase();
+
+            if (userAgent.includes("android")) {
+                // Tenta abrir no aplicativo ou navegador padrão (Chrome)
+                window.location.href = "intent://www.instagram.com/maisinternetprovedor/#Intent;scheme=https;package=com.android.chrome;end";
+            } else {
+                // Em outros sistemas, abre o link normalmente
+                window.open(instagramURL, "_blank");
+            }
+        }
+
+        // Clique manual no botão
+        document.getElementById("instaLink").addEventListener("click", function(e) {
+            e.preventDefault();
+            openExternalLink();
+        });
+
         // Contador regressivo para redirecionamento automático
         let timeLeft = 10;
-        const timerElement = document.getElementById('timer');
-        
-        const countdown = setInterval(function() {
+        const timerElement = document.getElementById("timer");
+
+        const countdown = setInterval(() => {
             timeLeft--;
             timerElement.textContent = timeLeft;
-            
+
             if (timeLeft <= 0) {
                 clearInterval(countdown);
-                window.location.href = 'https://www.instagram.com/seu_perfil/';
+                openExternalLink();
             }
         }, 1000);
     </script>
